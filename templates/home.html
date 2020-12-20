@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+<link rel="stylesheet" href="style_home.css">
+{% block content %}
+  <style>
+	body{background-color: skyblue;
+}
+</style>
+  <div class="jumbotron">
+    <h1 style = "color: navy;"> Bienvenue sur notre site ! <br> Préparez-vous à rencontrer votre alter-ego ! <h1>
+    <h5> </h5>
+    <ul>
+    {% for newpost in posts %}
+    	<h2>{{ newpost.title }}</h2>{{ newpost.post|safe }}
+    {% else %}
+	<li><em>Pour savoir sur quel site votre pote vous a envoyé, cliquez sur Qui sommes-nous ?</em></li>
+    	<li><em>Si vous êtes nouveau, cliquez sur S'incrire</em></li>
+	<li><em>Sinon, cliquez sur Se connecter</em></li>
+    {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
+
+
+
