@@ -40,6 +40,14 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
+                    Présentez-vous en quelques mots! <br>
+                    {{form.description(class="form-control form-control-lg")}}
+                </div>
+                <div class="form-group">
+                    Que recherchez-vous sur ce site ? <br>
+                    {{form.recherche(class="form-control form-control-lg")}}
+                </div>
+                <div class="form-group">
                     {{ form.picture.label() }}
                     {{ form.picture(class="form-control-file") }}
                     {% if form.picture.errors %}

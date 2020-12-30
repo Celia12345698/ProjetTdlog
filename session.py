@@ -5,6 +5,7 @@ from flask import session
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 import numpy as np
+import time
 from flask_mail import Message, Mail
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import Form
@@ -15,6 +16,7 @@ import secrets
 from PIL import Image
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
+from flask_socketio import SocketIO, send, join_room, leave_room, emit
 
 number_q = 2
 
@@ -26,7 +28,7 @@ app.secret_key = "hello"
 app.permanent_session_lifetime = timedelta(minutes=5)
 
 db=SQLAlchemy(app)
-
+socketio=SocketIO(app)
 
 class users(db.Model):
   _id = db.Column("id",db.Integer,primary_key=True)
@@ -40,7 +42,10 @@ class users(db.Model):
   region=db.Column(db.Integer)
   same_region=db.Column(db.Integer)
   pwdhash = db.Column(db.String(54))
-  image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+  image_file = db.Column(db.String(20), nullable=False, default='..\profile_pics\default.jpg')
+  description = db.Column(db.String(200),default="")
+  recherche=db.Column(db.String(200),default="")
+
 
 
   def __init__(self, firstname, lastname, email, password, gender, region):
@@ -82,7 +87,6 @@ Regions=[(1,'Auvergne-Rhônes-Alpes'),(2,'Bourgogne-Franche-Comté'),(3,'Bretagn
 Genders=[(1,'Homme'), (2,'Femme')]
 
 Age=[(1,'18-25'),(2,'26-30'),(3,'31-35'),(4,'36-40'),(5,'41 et +')]
-
 
 
 # créer un compte
@@ -138,27 +142,16 @@ class UpdateAccountForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     #mettre les autres trucs
-    picture = FileField('Photo de profil', validators=[FileAllowed(['jpg', 'png'])])
+    picture = FileField('Photo de profil', validators=[FileAllowed(['jpg', 'png','jpeg'])])
     submit = SubmitField('Update')
-
-    # def validate_firstname(self, firstname):
-    #     if firstname.data != user.firstname:
-    #         user = User.query.filter_by(firstname=firstname.data).first()
-    #         if user:
-    #             raise ValidationError('That firstname is taken. Please choose a different one.')
-    #
-    # def validate_email(self, email):
-    #     if email.data != current_user.email:
-    #         user = User.query.filter_by(email=email.data).first()
-    #         if user:
-    #             raise ValidationError('That email is taken. Please choose a different one.')
-
+    description = TextAreaField('Description')
+    recherche = TextAreaField('Recherche')
 
 
 #Links to the Home Page
 @app.route('/')
 def home():
-  return render_template('home_2.html')
+  return render_template('home.html')
 
 
 #Links to the qui Page: explique le principe du site
@@ -174,6 +167,7 @@ def signup():
   form = SignupForm()
 
   if 'email' in session:
+    user=users.query.filter_by(email = session['email']).first()
     return redirect(url_for('profile'))
 
   if request.method == 'POST':
@@ -199,38 +193,35 @@ def question():
   q2=0
   if 'email' in session:
     mail = session['email']
-    found_user=users.query.filter_by(email = session['email']).first()
-    session['firstname']=found_user.firstname
+    user=users.query.filter_by(email = session['email']).first()
+    session['firstname']=user.firstname
     if request.method=="POST":
       #requête q1
       q1=request.form["q1"]
-      found_user.q1=q1
+      user.q1=q1
       #requête q2
       q2=request.form["q2"]
-      found_user.q2=q2
+      user.q2=q2
       db.session.commit()
       #age
       if request.form.get("homme"):
-        #print("salut")
-        #found_user.list_genders.append(1)
-        #print(found_user.list_genders)
-        found_user.man=1
+        user.man=1
         db.session.commit()
       else:
-        found_user.man=0
+        user.man=0
         db.session.commit()
       if request.form.get("femme"):
-        found_user.woman=1
+        user.woman=1
         db.session.commit()
       else:
-        found_user.woman=0
+        user.woman=0
         db.session.commit()
       #region
       if request.form.get("oui"):
-        found_user.same_region=1
+        user.same_region=1
         db.session.commit()
       else:
-        found_user.same_region=0
+        user.same_region=0
         db.session.commit()
       return redirect(url_for('profile'))
     elif request.method == 'GET':
@@ -238,22 +229,6 @@ def question():
 
   else:
     return redirect(url_for('signup'))
-
-
-
-
-@app.route('/upload', methods=['POST'])
-def upload():
-    pic = request.files['pic']
-    if not pic:
-        return 'No pic uploaded!', 400
-    filename = secure_filename(pic.filename)
-    mimetype = pic.mimetype
-    if not filename or not mimetype:
-        return 'Bad upload!', 400
-    img = Img(img=pic.read(), name=filename, mimetype=mimetype)
-    db.session.commit()
-    return 'Img Uploaded!', 200
 
 def filtre_gender(id):
   L=[]
@@ -287,12 +262,11 @@ def filtre_region(id):
         L.append(person._id)
   return L
 
-@app.route('/profile')
-def profile():
+@app.route('/compatibilite')
+def compa():
   form = UpdateAccountForm()
   if 'email' not in session:
     return redirect(url_for('signin'))
-
   user = users.query.filter_by(email = session['email']).first()
   image_file = url_for('static', filename='profile_pics/' + user.image_file)
   #if user is None:
@@ -301,12 +275,10 @@ def profile():
   values=users.query.all()
   L2=[]
   L3=filtre_matching(user._id)
-  # for i in range (len(values)):
-  #   L2.append([values[i].firstname,L1[i]])
   for i in range(len(L3)):
     value=users.query.filter_by(_id=L3[i][0]).first()
-    L2.append([value.firstname,L3[i][1]])
-  return render_template('profile.html', values=values, L2=L2, image_file=image_file, form=form)
+    L2.append([value,L3[i][1]])
+  return render_template('compatibilite.html', values=values, L2=L2, image_file=image_file, form=form, user=user)
 
 
 def save_picture(form_picture):
@@ -322,9 +294,19 @@ def save_picture(form_picture):
 
     return picture_fn
 
+@app.route('/profil/<id>')
+def profilext(id):
+  user = users.query.filter_by(_id = id).first()
+  image_file = url_for('static', filename='profile_pics/' + user.image_file)
+  return render_template("profilext.html",user=user,image_file=image_file)
+
+@app.route('/profil')
+def profile():
+  user = users.query.filter_by(email = session['email']).first()
+  image_file = url_for('static', filename='profile_pics/' + user.image_file)
+  return render_template("profil.html",user=user,image_file=image_file)
 
 @app.route("/modifprofil", methods=['GET', 'POST'])
-
 def modifprofil():
   user = users.query.filter_by(email = session['email']).first()
   form = UpdateAccountForm()
@@ -332,14 +314,19 @@ def modifprofil():
       if form.picture.data:
           picture_file = save_picture(form.picture.data)
           user.image_file = picture_file
+      user.description=form.description.data
+      if form.recherche.data:
+          user.recherche=form.recherche.data
       user.firstname = form.firstname.data
       user.email = form.email.data
       db.session.commit()
       flash('Tes informations ont été mises à jour!', 'success')
-      return redirect(url_for('modifprofil'))
+      return redirect(url_for('profile'))
   elif request.method == 'GET':
       form.firstname.data = user.firstname
       form.email.data = user.email
+      form.description.data=user.description
+      form.recherche.data=user.recherche
   image_file = url_for('static', filename='profile_pics/' + user.image_file)
   return render_template('modifprofil.html', title='modifprofil',
                           image_file=image_file, form=form)
@@ -351,6 +338,7 @@ def signin():
   form = SigninForm()
 
   if 'email' in session:
+    user = users.query.filter_by(email=session['email']).first()
     return redirect(url_for('profile'))
 
   if request.method == 'POST':
@@ -360,6 +348,7 @@ def signin():
       session['email'] = form.email.data
       user=users.query.filter_by(email = session['email']).first()
       session['firstname']=user.firstname
+      session['id']=user._id
       L_reponses=select_questions(user._id)
       for elem in L_reponses:
         if elem==None:
@@ -411,21 +400,6 @@ def matching(id):
   for i in range (0,row1[0]):
     L_reponses_tout.append(L[i][0])
     L_reponses_tout.append(L[i][1])
-
-
-  #personne=cur.execute("select q1,q2 from users where email = m ")
-
-  # row1=personne.fetchone()
-  # L_reponses=[]
-  # L1=[]
-  #
-  # while row1 is not None:
-  #   L1.append(row)
-  #   row1=personne.fetchone()
-  #
-  # L_reponses.append(L1[0][0])
-  # L_reponses.append(L1[0][1])
-  L_reponses=[]
   L_reponses=L_reponses_tout[number_q*(id-1):number_q*id]
   #print(L_reponses)
   L_arrange=[]
@@ -504,19 +478,6 @@ def select_questions(id):
     L_reponses_tout.append(L[i][1])
 
 
-  #personne=cur.execute("select q1,q2 from users where email = m ")
-
-  # row1=personne.fetchone()
-  # L_reponses=[]
-  # L1=[]
-  #
-  # while row1 is not None:
-  #   L1.append(row)
-  #   row1=personne.fetchone()
-  #
-  # L_reponses.append(L1[0][0])
-  # L_reponses.append(L1[0][1])
-  L_reponses=[]
   L_reponses=L_reponses_tout[number_q*(id-1):number_q*id]
   return L_reponses
 
@@ -527,9 +488,66 @@ def fonction(id,L):
       L.remove(elem)
   return L
 
+def room():
+    Rooms=[]
+    all=users.query.all()
+    for user1 in all:
+        for user2 in all:
+            if user1._id < user2._id:
+                Rooms.append((user1._id,user2._id))
+
+ROOMS=["Salut","Saaa"]
+
+
+@app.route("/chat", methods=['GET', 'POST'])
+def chat():
+    if 'email' not in session:
+        flash('Please login', 'danger')
+        return redirect(url_for('login'))
+    user = users.query.filter_by(email=session['email']).first()
+    return render_template("chat.html", firstname=user.firstname, rooms=ROOMS)
+
+
+@socketio.on('incoming-msg')
+def on_message(data):
+    """Broadcast messages"""
+
+    msg = data["msg"]
+    username = data["username"]
+    room = data["room"]
+    # Set timestamp
+    time_stamp = time.strftime('%b-%d %I:%M%p', time.localtime())
+    user = users.query.filter_by(email=session['email']).first()
+    send({"username": username, "msg": msg, "time_stamp": time_stamp}, room=user._id)
+
+
+
+@socketio.on('join')
+def on_join(data):
+    """User joins a room"""
+
+    username = data["username"]
+    room = data["room"]
+    join_room(room)
+
+    # Broadcast that new user has joined
+    send({"msg": username + " has joined the " + room + " room."}, room=room)
+
+
+@socketio.on('leave')
+def on_leave(data):
+    """User leaves a room"""
+
+    username = data['username']
+    room = data['room']
+    leave_room(room)
+    send({"msg": username + " has left the room"}, room=room)
+
+
+
 if __name__=="__main__":
     db.create_all()
-    app.run(debug=True)
+    socketio.run(app, debug=True)
 
 
 
