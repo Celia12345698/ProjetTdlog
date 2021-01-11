@@ -13,6 +13,8 @@ crossorigin="anonymous"
 >
 	<title>Page de profil</title>
 	<link rel="stylesheet" type="text/css" media="screen" href=../static/styles/base.css>
+	<link rel="stylesheet" type="text/css" media="screen" href=../static/styles/profil.css>
+
 
 </head>
 
@@ -39,8 +41,14 @@ crossorigin="anonymous"
                  <li class="nav-item">
                 <a class="nav-link" href="{{url_for('compa')}}">Mes compatibilités</a>
               </li>
+                 <li class="nav-item">
+                <a class="nav-link" href="{{url_for('my_messages')}}">Mes messages</a>
+              </li>
+               <li class="nav-item">
+                <a class="nav-link" href="{{url_for('chat')}}">Chat</a>
+              </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('signout') }}">Se déconnecter</a>
+                <a class="nav-link" href="{{url_for('signout')}}">Se déconnecter</a>
               </li>
             </ul>
           </div>
@@ -49,12 +57,28 @@ crossorigin="anonymous"
     </div>
   </div>
   	<div class= "container">
-	<h1> {{ user.firstname }} </h1>
-	<img class="rounded-circle account-img" src="{{ image_file }}">	<br>
-	Votre description : <br>
-	<p> {{ user.description }} </p>
-	Ce que vous recherchez : <br>
-	<p> {{ user.recherche }} </p>
+  	<div class="row"> 
+	<img class="rounded-circle account-img" src="{{ image_file }}">	<h1> {{ user.firstname }} </h1>
+	</div>
+	<div class="row">
+	<div class="col-12 col-md-6">
+	<div class="bloc">
+		<div class="section_title"> Ma description </div>
+		<div class="section_content"> {{ user.description }} </div>
+    </div> </div>
+    <div class="col-12 col-md-6">
+    <div class="bloc">
+		<div class="section_title"> Ce que je recherche </div>
+		<div class="section_content"> {{ user.recherche }} </div>
+    </div> 
+	</div></div>
+	<br><br>
 
 	<p> <a href={{url_for('modifprofil')}}> Modifier mon profil </a></p> </div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  </html>

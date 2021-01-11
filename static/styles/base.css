@@ -40,20 +40,13 @@ text-align: center;
   height: 100px;
 }
 
-.btn-custom {
-    
-    font-size:200%;
-    border-color:rgb(115,81,83);
-    background-color:rgba(115,81,83,0.5);
-    border-style: solid;
-    color:white;
-
-}
 
 .navbar{
   background-color:#735153;
 }
 
+
 .flotte {
 float:left;
 }
+

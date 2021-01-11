@@ -51,14 +51,16 @@ crossorigin="anonymous"
   <form action="{{ url_for('signin') }}" method=post>
     {{ form.hidden_tag() }}
      
-    {{ form.email.label }}
+    Email
     {{ form.email }}
      
-    {{ form.password.label }}
+    Mot de passe
     {{ form.password }}
      
     {{ form.submit }}
   </form>
+
+  <br> <br> <a href="{{url_for('signup')}}"> Je n'ai pas de compte </a>
      
 </body>
 </html>

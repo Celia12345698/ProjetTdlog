@@ -33,11 +33,17 @@ crossorigin="anonymous"
                 <a class="nav-link" href="#">Qui sommes-nous?</a>
               </li>
                  <li class="nav-item active">
-                <a class="nav-link" href="#">Mon profil</a>
+                <a class="nav-link" href="{{url_for('profile')}}">Mon profil</a>
               </li>
                </li>
                  <li class="nav-item">
                 <a class="nav-link" href="{{url_for('compa')}}">Mes compatibilités</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Mes messages</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('chat')}}">Chat</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('signout') }}">Se déconnecter</a>
@@ -49,10 +55,24 @@ crossorigin="anonymous"
     </div>
   </div>
 
-	<h1> {{ user.firstname }} </h1>
-	<img class="rounded-circle account-img" src="{{ image_file }}">	
-	<p> {{ user.description }} </p>
-	<p> {{ user.recherche }} </p>
-	
+  <div class= "container">
+  <h1> {{ user.firstname }} </h1>
+  <img class="rounded-circle account-img" src="{{ image_file }}"> <br>
+  <div class="bloc">
+    <div class="section_title"> Sa description </div>
+    <div class="section_content"> {{ user.description }} </div>
+    </div> 
+    <div class="bloc">
+    <div class="section_title"> Ce qu'il/elle recherche </div>
+    <div class="section_content"> {{ user.recherche }} </div>
+    </div> 
+  </div>
+  <a href={{url_for('send_message',id=user._id)}}> Envoyer un message à {{user.firstname}} </a>
+
 
 </body>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  </html>
