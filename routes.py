@@ -6,8 +6,7 @@ from models import Message, socketio, db, SignupForm, UpdateAccountForm, SendMes
 from flask_socketio import send, leave_room, join_room
 
 number_q = 2
-names = init_quest(
-    number_q)  # register the questions in the db, names is the list of the names of the questions (q1,q2...)
+names = init_quest(number_q)  # register the questions in the db, names is the list of the names of the questions (q1,q2...)
 
 ROOMS = ["Sérieux", "Fun", "Actualité"]
 
