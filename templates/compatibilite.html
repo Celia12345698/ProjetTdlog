@@ -19,17 +19,17 @@ crossorigin="anonymous"
   </title>
 </head>
 <body>
-    <div class="container-fluid">
+     <div class="container-fluid">
       <div class="row">
         <nav class="col navbar navbar-expand-lg navbar-dark">
-          <a class="navbar-brand" href="index.html">CF</a>
+          <a class="navbar-brand">CF</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div id="navbarContent" class="collapse navbar-collapse">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="">Accueil</a>
+                <a class="nav-link" href="{{url_for('home')}}">Accueil</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Qui sommes-nous?</a>
@@ -39,15 +39,14 @@ crossorigin="anonymous"
               </li>
                </li>
                  <li class="nav-item active">
-                <a class="nav-link" href="#">Mes compatibilités</a>
+                <a class="nav-link" href="{{url_for('compa')}}">Mes compatibilités</a>
               </li>
-                <li class="nav-item">
-                <a class="nav-link" href="#">Mes messages</a>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('my_messages')}}">Mes messages</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{url_for('chat')}}">Chat</a>
               </li>
-            
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('signout') }}">Se déconnecter</a>
               </li>
