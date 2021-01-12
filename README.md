@@ -1,4 +1,4 @@
-# TDLOG Project 
+# TDLOG Project : Compatibility Finder
 
 Our project is to create a website allowing people with the same interests to meet.
 
