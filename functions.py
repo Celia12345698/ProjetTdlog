@@ -91,6 +91,7 @@ def matching(id,names_quest): #names_quest : list of the names of the questions 
   all_answers=[]
   L=[]
   while row is not None:
+    print(row)
     L.append(row)
     row=all_users.fetchone()
   nombre_u=cur.execute("select count(email) from users")

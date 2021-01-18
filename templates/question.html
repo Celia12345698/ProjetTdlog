@@ -1,27 +1,68 @@
-{% extends "layout.html" %}
-{% block title %}Home Page{% endblock %}
-{% block content %}
-<h3>Bienvenue, {{ session['firstname'] }} !<h3> 
+ <!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+<link
+rel="stylesheet"
+href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+crossorigin="anonymous"
+>
+	<title>Réponses aux questions</title>
+	<link rel="stylesheet" type="text/css" media="screen" href=../static/styles/base.css>
+
+</head>
+<body>
+ <div class="container-fluid">
+      <div class="row">
+        <nav class="col navbar navbar-expand-lg navbar-dark">
+          <a class="navbar-brand">CF</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div id="navbarContent" class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('home')}}">Accueil</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('qui')}}">Qui sommes-nous?</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+<h3>Bienvenue, {{ session['firstname'] }} !</h3> 
 <form action="#" method="POST">
+	<div class="container-fluid">
 	<p> Pour chaque question, choisis un nombre entre 0 et 4. </p>
 	<p> 0 = pas du tout d'accord; 4 = tout à fait d'accord </p>
-	<p>1) J'aime la musique </p>
-	<input type="number" name="q1" placeholder="" value="{{q1 if q1}}" min="0" max="4" required/>
-	<br>
-	<br>
-	<p>2) J'aime le cinéma </p>
-	<input type="number" name="q2" placeholder="" value="{{q2 if q2}}" min="0" max="4" required/>
-	<br>
-	<br>
-	<p>3) Je désire parler à: </p>
+	<div class="row">
+		<div class="col-12 col-md-3">
+			<p> <span class="circle"> 1 </span> J'aime la musique </p>
+		</div>
+		<div class="col-12 col-md-3">
+			<input type="number" name="q1" placeholder="" value="{{q1 if q1}}" min="0" max="4" required/>
+		</div>
+		<div class="col-12 col-md-3">
+			<p> <span class="circle"> 2 </span> J'aime le cinéma </p>
+		</div>
+		<div class="col-12 col-md-3">
+			<input type="number" name="q2" placeholder="" value="{{q2 if q2}}" min="0" max="4" required/>
+		</div></div>
+	<div class="row">
+		<div class="col-12">
+	<p> <span class="circle"> 3 </span> Je désire parler à: 
 	<input type="checkbox" name="homme" value="homme"> Homme 
-	<br>
-	<input type="checkbox" name="femme" value="femme"> Femme 
-	<br>
-	<br>
-	<p>4) Je veux uniquement parler à des personnes de ma région: <input type="checkbox" name="oui" value="oui"> </p>
+	<input type="checkbox" name="femme" value="femme"> Femme </p></div></div>
+
+	<p><span class="circle"> 4 </span> Je veux uniquement parler à des personnes de ma région: <input type="checkbox" name="oui" value="oui"> </p>
 	<br>
 	<input type="submit" value="Envoyer"/>
-</form>
+</form></body>
 
-{% endblock %}

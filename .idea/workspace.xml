@@ -20,8 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5237718-2f48-4769-893d-74d4ab411172" name="Default Changelist" comment="Messages">
-      <change beforePath="$PROJECT_DIR$/templates/contact.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/qui.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/qui.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Message.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/Message.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/question.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/question.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/signin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/signin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/users.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,18 +60,18 @@
   </component>
   <component name="RunManager">
     <configuration name="routes" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="ProjetTdlog" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Users\Sarah\miniconda3\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\Sarah\Documents\Ponts2A\TDLog\ProjetTdlog\routes.py" />
+      <module name="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/routes.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -146,22 +152,22 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1609922397104" />
-    <state width="1259" height="180" key="GridCell.Tab.0.bottom" timestamp="1610411298712">
+    <state width="1259" height="281" key="GridCell.Tab.0.bottom" timestamp="1610969494007">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1259" height="180" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1610411298712" />
-    <state width="1259" height="180" key="GridCell.Tab.0.center" timestamp="1610411298712">
+    <state width="1259" height="281" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1610969494007" />
+    <state width="1259" height="281" key="GridCell.Tab.0.center" timestamp="1610969494006">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1259" height="180" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1610411298712" />
-    <state width="1259" height="180" key="GridCell.Tab.0.left" timestamp="1610411298712">
+    <state width="1259" height="281" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1610969494006" />
+    <state width="1259" height="281" key="GridCell.Tab.0.left" timestamp="1610969494006">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1259" height="180" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1610411298712" />
-    <state width="1259" height="180" key="GridCell.Tab.0.right" timestamp="1610411298712">
+    <state width="1259" height="281" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1610969494006" />
+    <state width="1259" height="281" key="GridCell.Tab.0.right" timestamp="1610969494006">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1259" height="180" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1610411298712" />
+    <state width="1259" height="281" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1610969494006" />
     <state x="121" y="51" key="MergeDialog" timestamp="1610411469825">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
