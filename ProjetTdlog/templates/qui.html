@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+<link
+rel="stylesheet"
+href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+crossorigin="anonymous"
+>
+	<title>Qui sommes-nous</title>
+	<link rel="stylesheet" type="text/css" media="screen" href=../static/styles/base.css>
+</head>
+
+<body> 
+	<div class="container-fluid">
+      <div class="row">
+        <nav class="col navbar navbar-expand-lg navbar-dark">
+          <a class="navbar-brand" href="index.html">CF</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div id="navbarContent" class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+              <li class="nav-item ">
+                <a class="nav-link" href="{{url_for('home')}}">Accueil</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="">Qui sommes-nous?</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <h1>Qui sommes-nous ?</h1>
+
+  <br>
+
+<div class="container">
+  <p> Bonne question ! Nous sommes 3 étudiants, Célia, Sarah, et Mathis, de l'Ecole des Ponts ParisTech. <br>
+  Notre but est simple : vous mettre en contact avec des personnes qui vous ressemblent, qui vous comprennent, qui vous complètent. 
+  <br> <a href={{url_for('signup')}}> Créez votre compte </a> sans plus tarder si cette perspective vous émoustille !
+  <br> <br>
+  Allez, pour vous permettre de mettre des visages sur ces jolis prénoms : </p>
+  <br> <center><img src="..\static\images\qui.png" style="text-align:center"> 
+  <p> (De gauche à droite : Célia, Sarah, Mathis) </p></center>
