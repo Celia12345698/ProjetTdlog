@@ -1,0 +1,16 @@
+.sender{
+	font-weight:bold;
+	font-size:150%;
+	text-align:left; 
+}
+
+.msg-content{
+  text-align:left;
+  font-size:125%;
+
+}
+
+.btn-custom.active {
+ color:black;
+}
+

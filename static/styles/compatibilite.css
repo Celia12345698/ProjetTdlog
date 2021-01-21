@@ -1,0 +1,27 @@
+img.pp{
+	height:100px;
+
+}
+
+p {
+	color:white;
+}
+
+.name{
+	font-size:150%;
+}
+
+.btn-custom {
+	bottom:0;
+    font-size:100%;
+    border-color:rgb(115,81,83);
+    background-color:rgba(115,81,83,0.5);
+    border-style: solid;
+    color:white;
+
+}
+
+.username{
+	size:100;
+}
+
