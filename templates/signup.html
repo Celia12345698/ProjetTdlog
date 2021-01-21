@@ -11,7 +11,7 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 crossorigin="anonymous"
 >
-<link rel="stylesheet" type="text/css" media="screen" href=../static/styles/home.css>
+<link rel="stylesheet" type="text/css" media="screen" href=../static/styles/base.css>
   <title>
     Site de rencontre
   </title>
@@ -20,7 +20,7 @@ crossorigin="anonymous"
     <div class="container-fluid">
       <div class="row">
         <nav class="col navbar navbar-expand-lg navbar-dark">
-          <a class="navbar-brand" href="index.html">CF</a>
+          <a class="navbar-brand"> <a href="https://imgbb.com/"><img src="https://i.ibb.co/ZXNx89b/logo-white2.png" alt="logo-white2" border="0" /></a></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -39,7 +39,7 @@ crossorigin="anonymous"
     </div>
   </div>
 
-  <h2>S'inscrire</h2>
+  <h3>S'inscrire</h3>
  <br><br>
 
   {% for message in form.firstname.errors %}
@@ -83,7 +83,7 @@ crossorigin="anonymous"
     {{ form.age }}
   </div>
   <div class="col-12 col-md-4">
-    {{ form.submit }}
+    <input type="submit" class="btn-custom" value="Créer le compte"> 
   </div>
 </div>
 

@@ -1,5 +1,13 @@
+:root {
+  --backgroundblue: rgba(211,211,256,0.2);
+  --ourbrown:rgba(115,81,83);
+  --ourlightbrown:rgba(115,81,83,0.7);
+}
+
+
+
 body{
-	font-family: "Apple Chancery, cursive";
+	font-family: Apple Chancery, cursive;
   color:#735153;
   background-color:  rgba(211,211,256,0.2);
 }
@@ -11,17 +19,10 @@ h1{
   font-weight:bold;
 }
 
+
 h2{
   text-align:center;
-  font-size:300%;
-  color:#735153;
-  font-weight:bold;
-
-}
-
-h3{
-  text-align:center;
-  font-size:250%;
+  font-size:175%;
 }
 
 p{
@@ -31,9 +32,9 @@ p{
 
 #header {​​
 color:black;
-background-color:white;
 background-image:url(../images/ami.jpg);
-width : 100%;
+background-size:30%;
+width : auto;
 height: auto;
 display: block;
 -moz-border-radius:7px;
@@ -41,7 +42,7 @@ display: block;
 border-radius:7px;
 background-repeat:no-repeat;
 background-position: center;
-background-size: cover
+background-size: cover;
 
 }​​
 
@@ -59,11 +60,12 @@ background-size: cover
 -moz-border-radius:7px;
 -webkit-border-radius:7px;
 border-radius:7px;
-  background-color:rgba(115,81,83,0.7);
+  background-color:var(--ourlightbrown);
   color:white;
 align-items:center;  
 text-align: center;
   margin: 10px;
+  font-family:Calibri;
 }
 
 .bottom{
@@ -73,7 +75,7 @@ text-align: center;
 .btn-custom {
     
     font-size:200%;
-    border-color:rgb(115,81,83);
+    border-color:var(--ourbrown);
     background-color:rgba(115,81,83,0.5);
     border-style: solid;
     color:white;
@@ -81,6 +83,6 @@ text-align: center;
 }
 
 .navbar{
-  background-color:#735153;
+  background-color:var(--ourbrown);
 }
 

@@ -22,7 +22,7 @@ crossorigin="anonymous"
 	      <div class="container-fluid">
       <div class="row">
         <nav class="col navbar navbar-expand-lg navbar-dark">
-          <a class="navbar-brand">CF</a>
+        <a class="navbar-brand"> <a href="https://imgbb.com/"><img src="https://i.ibb.co/ZXNx89b/logo-white2.png" alt="logo-white2" border="0" /></a></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -30,9 +30,6 @@ crossorigin="anonymous"
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="{{url_for('home')}}">Accueil</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Qui sommes-nous?</a>
               </li>
                  <li class="nav-item active">
                 <a class="nav-link" href="{{url_for('profile')}}">Mon profil</a>
@@ -56,19 +53,26 @@ crossorigin="anonymous"
       </div>
     </div>
   </div>
+  <!-- Flash error messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <p class=formError>{{ messages[0] }}</p>
+            {% endif %}
+        {% endwith %}
+  <br><br><h1> {{ user.firstname }} </h1> <br><br>
   	<div class= "container">
   	<div class="row"> 
-	<img class="rounded-circle account-img" src="{{ image_file }}">	<h1> {{ user.firstname }} </h1>
+    <div class="col-12 col-md-4">
+	<img class="rounded-circle account-img" src="{{ image_file }}">	
 	</div>
-	<div class="row">
-	<div class="col-12 col-md-6">
-	<div class="bloc">
-		<div class="section_title"> Ma description </div>
+	<div class="col-12 col-md-4">
+	<div class="bloc3">
+		<div class="section_title"> Ma description </div><br>
 		<div class="section_content"> {{ user.description }} </div>
     </div> </div>
-    <div class="col-12 col-md-6">
-    <div class="bloc">
-		<div class="section_title"> Ce que je recherche </div>
+    <div class="col-12 col-md-4">
+    <div class="bloc3">
+		<div class="section_title"> Ce que je recherche </div><br>
 		<div class="section_content"> {{ user.recherche }} </div>
     </div> 
 	</div></div>

@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let newRoom = p.innerHTML
             // Check if user already in the room
             if (newRoom === room) {
-                msg = `You are already in ${room} room.`;
+                msg = `Vous êtes déjà dans la salle ${room}.`;
                 printSysMsg(msg);
             } else {
                 leaveRoom(room);
@@ -110,8 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
         socket.emit('join', {'username': username, 'room': room});
 
         // Highlight selected room
-        document.querySelector('#' + CSS.escape(room)).style.color = "#ffc107";
-        document.querySelector('#' + CSS.escape(room)).style.backgroundColor = "white";
+        document.querySelector('#' + CSS.escape(room)).style.color = "rgba(232,143,124)";
+        //document.querySelector('#' + CSS.escape(room)).style.backgroundColor = "red";
 
         // Clear message area
         document.querySelector('#display-message-section').innerHTML = '';

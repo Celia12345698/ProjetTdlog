@@ -5,10 +5,11 @@ from functions import *
 from models import Message, socketio, db, SignupForm, UpdateAccountForm, SendMessage, SigninForm, MessageForm
 from flask_socketio import send, leave_room, join_room
 
-number_q = 2
+number_q = 10
 names = init_quest(number_q)  # register the questions in the db, names is the list of the names of the questions (q1,q2...)
 
 ROOMS = ["Sérieux", "Fun", "Actualité"]
+
 
 
 # Links to the Home Page
@@ -22,7 +23,7 @@ def qui():
     return render_template('qui.html')
 
 
-# Links to Signup Form: pour créer un compte, ajouter ici l'ensemble des questions
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignupForm()
@@ -55,27 +56,19 @@ def question():
         if request.method == "POST":
             for q in range(number_q):
                 answers.append(request.form[str(names[q])])
-            user.q1, user.q2 = answers[0], answers[1]
+            user.q1, user.q2, user.q3, user.q4, user.q5, user.q6, user.q7, user.q8, user.q9, user.q10 = answers[0], answers[1], answers[2], answers[3], answers[4],answers[5],answers[6],answers[7],answers[8],answers[9]
             db.session.commit()
             if request.form.get("homme"):
                 user.man = 1
                 db.session.commit()
-            else:
-                user.man = 0
-                db.session.commit()
             if request.form.get("femme"):
                 user.woman = 1
                 db.session.commit()
-            else:
-                user.woman = 0
-                db.session.commit()
-                # region
             if request.form.get("oui"):
                 user.same_region = 1
                 db.session.commit()
-            else:
-                user.same_region = 0
-                db.session.commit()
+            user.all_answered=1
+            db.session.commit()
             return redirect(url_for('profile'))
         elif request.method == 'GET':
             return render_template('question.html')
@@ -90,6 +83,9 @@ def compa():
     if 'email' not in session:
         return redirect(url_for('signin'))
     user = users.query.filter_by(email=session['email']).first()
+    if user.all_answered==0:
+        flash("Vous n'avez pas répondu à toutes les questions.")
+        return(redirect(url_for('question')))
     values = users.query.all()
     L2 = []
     L3 = filtre_matching(user._id, names)
@@ -102,16 +98,21 @@ def compa():
 
 @app.route('/profil/<id>', methods=['GET', 'POST'])
 def profilext(id):
-    user = users.query.filter_by(_id=id).first()
-    image_file = url_for('static', filename='profile_pics/' + user.image_file)
-    form = SendMessage()
-    if form.validate_on_submit():
-        if form.message.data:
-            flash('Ton message a bien été envoyé!', 'success')
-
-            form.message.data = None
-            return render_template("profilext.html", user=user, image_file=image_file, form=form)
-    return render_template("profilext.html", user=user, image_file=image_file, form=form)
+    if 'email' in session:
+        user = users.query.filter_by(_id=id).first()
+        if user.all_answered==0:
+            flash("Vous n'avez pas répondu à toutes les questions.")
+            return(redirect(url_for('question')))
+        image_file = url_for('static', filename='profile_pics/' + user.image_file)
+        form = SendMessage()
+        if form.validate_on_submit():
+            if form.message.data:
+                flash('Votre message a bien été envoyé!', 'success')
+                form.message.data = None
+                return render_template("profilext.html", user=user, image_file=image_file, form=form)
+        return render_template("profilext.html", user=user, image_file=image_file, form=form)
+    else:
+        return redirect(url_for('signin'))
 
 
 @app.route('/profil')
@@ -139,7 +140,7 @@ def modifprofil():
             user.firstname = form.firstname.data
             user.email = form.email.data
             db.session.commit()
-            flash('Tes informations ont été mises à jour!', 'success')
+            flash('Vos informations ont été mises à jour!', 'success')
             return redirect(url_for('profile'))
         elif request.method == 'GET':
             form.firstname.data = user.firstname
@@ -167,14 +168,11 @@ def signin():
         else:
             session['email'] = form.email.data
             user = users.query.filter_by(email=session['email']).first()
-            print(user._id)
             session['firstname'] = user.firstname
             session['id'] = user._id
-            questions = select_questions(user._id, names)
-            for answer in questions:
-                if answer == None:
-                    flash("Vous n'avez pas répondu à toutes les questions.")
-                    return redirect(url_for('question'))
+            if user.all_answered==0:
+                flash("Vous n'avez pas répondu à toutes les questions.")
+                return redirect(url_for('question'))
             return redirect(url_for('profile'))
 
     elif request.method == 'GET':
@@ -194,67 +192,88 @@ def signout():
 @app.route('/mesmessages')
 def my_messages():
     if 'email' in session:
-        messages_list = []
+        received_msg_list = []
         user = users.query.filter_by(email=session['email']).first()
+        if user.all_answered == 0:
+            flash("Vous n'avez pas répondu à toutes les questions.")
+            return (redirect(url_for('question')))
         Message = sqlite3.connect("Message.sqlite3")
         cur = Message.cursor()
-        messages = cur.execute("SELECT * FROM Message WHERE recipient_id={}".format(user._id))
-        row = messages.fetchone()
+        received_msg = cur.execute("SELECT * FROM Message WHERE recipient_id={}".format(user._id))
+        row = received_msg.fetchone()
         while row is not None:
-            print(row)
             sender = users.query.filter_by(_id=row[2]).first()
-            msg = [sender.firstname, row[3]]
-            messages_list.append(msg)
-            row = messages.fetchone()
+            image = url_for('static', filename='profile_pics/' + sender.image_file)
+            msg = [sender._id,sender.firstname, row[3],image]
+            received_msg_list.append(msg)
+            row = received_msg.fetchone()
 
-        print(messages_list)
-        return render_template('messages.html', messages_list=messages_list)
+        return render_template('messages.html', messages_list=received_msg_list)
     else:
         return redirect(url_for('signin'))
 
+@app.route('/messagesenvoyés')
+def sent_msg():
+    if 'email' in session:
+        user = users.query.filter_by(email=session['email']).first()
+        if user.all_answered == 0:
+            flash("Vous n'avez pas répondu à toutes les questions.")
+            return (redirect(url_for('question')))
+        sent_msg_list=[]
+        Message = sqlite3.connect("Message.sqlite3")
+        cur = Message.cursor()
+        sent_msg = cur.execute("SELECT * FROM Message WHERE sender_id={}".format(user._id))
+        row = sent_msg.fetchone()
+        while row is not None:
+            recipient = users.query.filter_by(_id=row[1]).first()
+            image = url_for('static', filename='profile_pics/' + recipient.image_file)
+            msg = [recipient._id,recipient.firstname, row[3],image]
+            sent_msg_list.append(msg)
+            row = sent_msg.fetchone()
+
+        return render_template('messagesenvoyés.html', messages_list=sent_msg_list)
+    else:
+        return redirect(url_for('signin'))
 
 @app.route('/send_message/<id>', methods=['GET', 'POST'])
 def send_message(id):
     recipient = users.query.filter_by(_id=id).first()  # The one who receives the msg
+    image = url_for('static', filename='profile_pics/' + recipient.image_file)
     if 'email' in session:
         user = users.query.filter_by(email=session['email']).first()  # The one who sends the message
+        if user.all_answered == 0:
+            flash("Vous n'avez pas répondu à toutes les questions.")
+            return (redirect(url_for('question')))
         form = MessageForm()
         if form.validate_on_submit():
             msg = Message(author=user, recipient=recipient, body=form.message.data)
             db.session.add(msg)
             db.session.commit()
-            idsender = msg.sender_id
-            prenomsender = users.query.filter_by(_id=idsender).first().firstname
-            print("Sender")
-            print(prenomsender)
-            print("Recipient")
-            print(recipient.firstname)
-            flash('Your message has been sent.')
+            flash('Votre message a bien été envoyé.')
             return redirect(url_for('profile'))
-        return render_template('sendmessage.html', form=form, author=user, recipient=recipient)
-
-    return (True)
+        return render_template('sendmessage.html', form=form, author=user, recipient=recipient,image=image)
+    else:
+        return redirect(url_for('signin'))
 
 
 @app.route("/chat", methods=['GET', 'POST'])
 def chat():
     if 'email' in session:
         user = users.query.filter_by(email=session['email']).first()
+        if user.all_answered == 0:
+            flash("Vous n'avez pas répondu à toutes les questions.")
+            return (redirect(url_for('question')))
         return render_template("chat.html", username=user.firstname, rooms=ROOMS)
 
     else:
-        flash('Please login', 'danger')
         return redirect(url_for('signin'))
 
 
 @socketio.on('incoming-msg')
 def on_message(data):
-    "Broadcast messages"
-
     msg = data["msg"]
     username = data["username"]
     room = data["room"]
-    # Set timestamp
     time_stamp = time.strftime('%b-%d %I:%M%p', time.localtime())
     send({"username": username, "msg": msg, "time_stamp": time_stamp}, room=room)
 
@@ -265,7 +284,6 @@ def on_join(data):
     username = data["username"]
     room = data["room"]
     join_room(room)
-
     send({"msg": username + " a rejoint la salle " + room + "."}, room=room)
 
 
@@ -275,9 +293,10 @@ def on_leave(data):
     username = data['username']
     room = data['room']
     leave_room(room)
-    send({"msg": username + " has left the room"}, room=room)
+    send({"msg": username + " a quitté la salle."}, room=room)
 
 
 if __name__ == "__main__":
     db.create_all(bind=['Message', 'users'])
     socketio.run(app, debug=True)
+

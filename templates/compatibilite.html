@@ -22,7 +22,7 @@ crossorigin="anonymous"
      <div class="container-fluid">
       <div class="row">
         <nav class="col navbar navbar-expand-lg navbar-dark">
-          <a class="navbar-brand">CF</a>
+          <a class="navbar-brand"> <a href="https://imgbb.com/"><img src="https://i.ibb.co/ZXNx89b/logo-white2.png" alt="logo-white2" border="0" /></a></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -30,9 +30,6 @@ crossorigin="anonymous"
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="{{url_for('home')}}">Accueil</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Qui sommes-nous?</a>
               </li>
                  <li class="nav-item">
                 <a class="nav-link" href="{{url_for('profile')}}">Mon profil</a>
@@ -58,16 +55,18 @@ crossorigin="anonymous"
   </div>
 
   <div class="jumbo">
-    <h1>{{ session['firstname'] }}, voici ta page de compatibilité !</h1> 
+    <h1>Ma page de compatibilité</h1> 
+    <br><br>
 <div class="container">
 <div class="row">
 {% for elem in L2 %}
   
 <div class="col-12 col-md-4">
-        <div class="bloc">
-		<p> <img class="small" src={{ elem[2] }}> 
-      <div class = "username"> {{elem[0].firstname}} </div>
-    Compatibilité: {{elem[1]}}% <br>
+        <div class="bloc4">
+          <br>
+		<p> <img class="pp" src={{ elem[2] }}> 
+      <div class = "name"> {{elem[0].firstname}} </div><br>
+    Compatibilité: {{elem[1]}}% <br><br>
     <a href="{{url_for('profilext',id=elem[0]._id)}}"> <button type="button" class="btn  btn-custom"> Voir son profil </button></a></p> </div> </div>
 	{% endfor %} </div></div>
 	<br>

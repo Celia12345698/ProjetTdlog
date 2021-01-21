@@ -1,10 +1,14 @@
-img {
-	height:50px;
+img.pp{
+	height:100px;
 
 }
 
 p {
 	color:white;
+}
+
+.name{
+	font-size:150%;
 }
 
 .btn-custom {

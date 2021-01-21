@@ -3,9 +3,9 @@ import numpy as np
 import os
 import secrets
 from PIL import Image
+from flask import session
 from models import users,Question,app
 
-#app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///users.sqlite3'
 app.config['SQLALCHEMY_BINDS'] = {'users':'sqlite:///users.sqlite3','Message':'sqlite:///Message.sqlite3'}
 
 
@@ -65,7 +65,7 @@ def save_picture(form_picture):
     #Registering the image in our file
     picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn) 
     #Dimensions
-    output_size = (125, 125)    
+    output_size = (250, 250)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
@@ -86,37 +86,32 @@ def matching(id,names_quest): #names_quest : list of the names of the questions 
   nb_quest=len(names_quest)
   users=sqlite3.connect("users.sqlite3")
   cur=users.cursor()
-  all_users=cur.execute("select {} from users".format(all_quest(names_quest)))
+  all_users=cur.execute("select id,{},all_answered from users".format(all_quest(names_quest)))
   row=all_users.fetchone()
   all_answers=[]
   L=[]
   while row is not None:
-    print(row)
-    L.append(row)
-    row=all_users.fetchone()
-  nombre_u=cur.execute("select count(email) from users")
-  row1=nombre_u.fetchone()
-  for i in range (0,row1[0]):
-    all_answers.append(L[i][0])
-    all_answers.append(L[i][1])
-  answers=all_answers[nb_quest*(id-1):nb_quest*id]
-  L_arrange=[]
-  L_gap=[]
+    if row[-1]==1:
+        L.append(row[:-1])
+    row = all_users.fetchone()
+
+  for i in range (len(L)):
+      answers=[]
+      for j in range(len(L[i])): #j=0 : id, and then: questions
+        answers.append(L[i][j])
+      all_answers.append(answers)
+  my_answers=[]
+  for i in all_answers:
+      if i[0]==id:
+          for j in range(len(i)):
+              my_answers.append(i[j])#answers of the current user
+          break
   L_percent=[]
-
-  for i in range(0,nb_quest):
-      for j in range(row1[0]):
-          L_arrange.append(all_answers[i+nb_quest*j])
-
-  for i in range(0,nb_quest):
-      for j in range(row1[0]):
-          L_gap.append(((4-np.abs(L_arrange[j+i*row1[0]]-answers[i]))))
-
-  for i in range(row1[0]):
-      somme=0
-      for j in range(0,nb_quest):
-          somme+=L_gap[i+row1[0]*j]
-      L_percent.append(100*somme/(4*nb_quest))
+  for i in range(len(all_answers)):
+      gap=0
+      for j in range(1,len(all_answers[i])):
+          gap+=4-np.abs(all_answers[i][j]-my_answers[j])
+      L_percent.append([all_answers[i][0],100*gap/(4*nb_quest)])
 
   users.close()
 
@@ -137,9 +132,9 @@ def filtre_matching(id,names_quest):
           L_ind.append(id1)
   else:
     L_ind=L_gender
-
-  for id1 in L_ind:
-    L_percent_new.append([id1,L_percent[id1-1]])
+  for i in L_percent:
+      if i[0] in L_ind:
+          L_percent_new.append([i[0],i[1]])
 
   L_percent_new=sorted(L_percent_new, key=lambda colonnes: colonnes[1], reverse=True)
 
@@ -164,12 +159,11 @@ def select_questions(id,names_quest):
   while row is not None:
     L.append(row)
     row=all_users.fetchone()
-  nombre_u=cur.execute("select count(email) from users")
-  row1=nombre_u.fetchone()
+  number_u=cur.execute("select count(email) from users")
+  row1=number_u.fetchone()
   for i in range (0,row1[0]):
     all_answers.append(L[i][0])
     all_answers.append(L[i][1])
 
   answers=all_answers[nb_quest*(id-1):nb_quest*id]
   return answers
-

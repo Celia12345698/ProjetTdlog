@@ -8,18 +8,16 @@ from wtforms.validators import InputRequired,Email, DataRequired, Length
 from flask_wtf.file import FileField, FileAllowed
 from flask_socketio import SocketIO
 
-
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///users.sqlite3'
-#app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///Message.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 app.secret_key = "ju_867!LM_4"
-app.permanent_session_lifetime = datetime.timedelta(minutes=5)
+app.permanent_session_lifetime = datetime.timedelta(minutes=20)
 
 db=SQLAlchemy(app)
 
 socketio = SocketIO(app, manage_session=False)
+
 
 Regions=[(1,'Auvergne-Rhônes-Alpes'),(2,'Bourgogne-Franche-Comté'),(3,'Bretagne'),(4,'Centre-Val de Loire'),(5,'Corse'),(6,'Grand Est'),(7,'Hauts-de-France'),(8,'Île-de-France'),(9,'Normandie'),(10,'Nouvelle-Acquitaine'),(11,'Occitanie'),(12,'Pays de la Loire'),(13,"Provence-Alpes-Côte-d'Azur"),(14,'Guadeloupe'),(15,'Martinique'),(16,'Guyane'),(17,'La Réunion'),(18,'Mayotte')]
 
@@ -35,7 +33,7 @@ class users(db.Model):
   firstname = db.Column(db.String(100))
   lastname = db.Column(db.String(100))
   email = db.Column(db.String(120), unique=True)
-  gender=db.Column(db.Integer) #=1 if man et 2 if woman
+  gender=db.Column(db.Integer) #=1 if man and 2 if woman
   man=db.Column(db.Integer,default="0")
   woman=db.Column(db.Integer,default="0")
   region=db.Column(db.Integer)
@@ -58,7 +56,6 @@ class users(db.Model):
     self.region=region.lower()
     self.image_file = "default.jpg"
 
-  #Salted Hash Password
   def set_password(self, password):
     self.pwdhash = generate_password_hash(password)
 
@@ -72,7 +69,6 @@ class Message(db.Model):
     recipient_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     sender_id=db.Column(db.Integer,db.ForeignKey('users.id'),nullable=False)
     body = db.Column(db.String(140))
-    #timestamp = db.Column(db.DateTime, index=True, default=time.strftime('%b-%d %I:%M%p', time.localtime()))
 
     def __repr__(self):
         return '<Message {}>'.format(self.body)
@@ -89,7 +85,6 @@ class MessageForm(Form):
     message = TextAreaField('Message', validators=[DataRequired(), Length(min=0, max=140)])
     submit = SubmitField('Envoyer')
 
-# créer un compte
 class SignupForm(Form):
   firstname = TextField("Prénom",  validators=[InputRequired("Merci d'entrer un prénom.")])
   lastname = TextField("Nom", validators=[InputRequired("Merci d'entrer un nom.")])
@@ -117,7 +112,7 @@ class SignupForm(Form):
 
 
 # se connecter
-class SigninForm(Form): #un coup form, un coup flask form...
+class SigninForm(Form):
   email = TextField("Email",  [InputRequired("Merci d'entrer votre adresse mail."), Email("L'adresse mail doit être valide. ")])
   password = PasswordField('Mot de passe', validators=[InputRequired("Merci d'entrer votre mot de passe.")])
   submit = SubmitField("Se connecter")
@@ -141,7 +136,6 @@ class UpdateAccountForm(Form):
                            validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
-    #mettre les autres trucs
     picture = FileField('Photo de profil', validators=[FileAllowed(['jpg', 'png','jpeg'])])
     submit = SubmitField('Mettre à jour')
     description = TextAreaField('Description')

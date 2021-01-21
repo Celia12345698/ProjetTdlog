@@ -13,6 +13,7 @@ crossorigin="anonymous"
 >
 	<title>Page de profil</title>
 	<link rel="stylesheet" type="text/css" media="screen" href=../static/styles/base.css>
+  <link rel="stylesheet" type="text/css" media="screen" href=../static/styles/messages.css>
 
 </head>
 
@@ -20,7 +21,7 @@ crossorigin="anonymous"
 		 <div class="container-fluid">
       <div class="row">
         <nav class="col navbar navbar-expand-lg navbar-dark">
-          <a class="navbar-brand">CF</a>
+                    <a class="navbar-brand"><a href="https://imgbb.com/"><img src="https://i.ibb.co/ZXNx89b/logo-white2.png" alt="logo-white2" border="0" /></a></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -28,9 +29,6 @@ crossorigin="anonymous"
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="{{url_for('home')}}">Accueil</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Qui sommes-nous?</a>
               </li>
                  <li class="nav-item">
                 <a class="nav-link" href="{{url_for('profile')}}">Mon profil</a>
@@ -54,16 +52,25 @@ crossorigin="anonymous"
       </div>
     </div>
   </div>
-
+  <br><br>
+<div class="container">
+  <center><a href="" class="btn  btn-custom active" > Messages reçus</button></a>
+      <a href="{{ url_for('sent_msg') }}" class="btn  btn-custom ">Messages envoyés</button> </a></center>
 {% for msg in messages_list %}
 <div class="col-12">
-        <div class="bloc">
-        <p style="font-weight:bold">Envoyé par {{msg[0]}} </p>
-        {{msg[1]}} <br>
+        <div class="bloc3">
+          <div class="row">
+        <div class="col-3">
+          <img src="{{msg[3]}}">
+        </div>
+        <div class="col-9">
+        <p class="sender">Envoyé par {{msg[1]}} :</p>
+        <br><p class="msg-content">{{msg[2]}} </p><br>
       </div></div>
+      </div><a href="{{url_for('send_message',id=msg[0])}}"> <p style="text-align:right"> Lui répondre </p></a></div>
 
 {% endfor %}
-
+</div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

@@ -1,3 +1,7 @@
+h1{
+	text-align:center;
+}
+
 .section_title {
 	font:bold;
 	font-size:200%;
@@ -10,3 +14,4 @@
 	font-size:100%;
 	text-align:left;
 }
+

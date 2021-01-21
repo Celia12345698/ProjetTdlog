@@ -19,7 +19,7 @@ crossorigin="anonymous"
  <div class="container-fluid">
       <div class="row">
         <nav class="col navbar navbar-expand-lg navbar-dark">
-          <a class="navbar-brand">CF</a>
+          <a class="navbar-brand"> <a href="https://imgbb.com/"><img src="https://i.ibb.co/ZXNx89b/logo-white2.png" alt="logo-white2" border="0" /></a></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -28,41 +28,113 @@ crossorigin="anonymous"
               <li class="nav-item">
                 <a class="nav-link" href="{{url_for('home')}}">Accueil</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{url_for('qui')}}">Qui sommes-nous?</a>
-              </li>
+      
             </ul>
           </div>
         </nav>
       </div>
-    </div>
+    
+</div>
   </div>
+ <!-- Flash error messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <p class=formError>{{ messages[0] }}</p>
+            {% endif %}
+        {% endwith %}
+        <br><br>
 <h3>Bienvenue, {{ session['firstname'] }} !</h3> 
+<br>
 <form action="#" method="POST">
 	<div class="container-fluid">
-	<p> Pour chaque question, choisis un nombre entre 0 et 4. </p>
-	<p> 0 = pas du tout d'accord; 4 = tout à fait d'accord </p>
+		<div class="bloc2">
+	<p> Ce questionnaire a pour but de nous aider à mettre en contact des personnes qui se ressemblent. Répondez en toute honnêteté à ces questions, avec la règle suivante: </p>
+	<p> 0 = pas du tout d'accord; 4 = tout à fait d'accord </p></div> <br><br>
+	
 	<div class="row">
-		<div class="col-12 col-md-3">
-			<p> <span class="circle"> 1 </span> J'aime la musique </p>
+		<div class="col-12 col-md-6">
+	<p> Ma personnalité </p></div>
+		<div class="col-12 col-md-6">
+<p> Mes centres d'intérêt </p></div> </div>
+<br>
+	<div class="row">
+		
+		<div class="col-12 col-md-4">
+			<p> <span class="circle"> 1 </span> Je suis extraverti(e). </p>
 		</div>
-		<div class="col-12 col-md-3">
+		<div class="col-12 col-md-2">
 			<input type="number" name="q1" placeholder="" value="{{q1 if q1}}" min="0" max="4" required/>
 		</div>
-		<div class="col-12 col-md-3">
-			<p> <span class="circle"> 2 </span> J'aime le cinéma </p>
+		<div class="col-12 col-md-4">
+		
+			<p> <span class="circle"> 6 </span> Je suis sportif/ve. </p>
 		</div>
-		<div class="col-12 col-md-3">
-			<input type="number" name="q2" placeholder="" value="{{q2 if q2}}" min="0" max="4" required/>
+		<div class="col-12 col-md-2">
+			<input type="number" name="q6" placeholder="" value="{{q6 if q6}}" min="0" max="4" required/>
 		</div></div>
+			<div class="row">
+		<div class="col-12 col-md-4">
+			<p> <span class="circle"> 2 </span> J'écoute mon instinct plus que ma raison. </p>
+		</div>
+		<div class="col-12 col-md-2">
+			<input type="number" name="q2" placeholder="" value="{{q2 if q2}}" min="0" max="4" required/>
+		</div>
+		<div class="col-12 col-md-4">
+			<p> <span class="circle"> 7 </span> La musique a une grande place dans ma vie. </p>
+		</div>
+		<div class="col-12 col-md-2">
+			<input type="number" name="q7" placeholder="" value="{{q7 if q7}}" min="0" max="4" required/>
+		</div></div>
+		<div class="row">
+		<div class="col-12 col-md-4">
+			<p> <span class="circle"> 3 </span> Je contrôle mes émotions. </p>
+		</div>
+		<div class="col-12 col-md-2">
+			<input type="number" name="q3" placeholder="" value="{{q3 if q3}}" min="0" max="4" required/>
+		</div>
+		<div class="col-12 col-md-4">
+			<p> <span class="circle"> 8 </span> J'aime parler politique. </p>
+		</div>
+		<div class="col-12 col-md-2">
+			<input type="number" name="q8" placeholder="" value="{{q8 if q8}}" min="0" max="4" required/>
+		</div></div>
+		<div class="row">
+		<div class="col-12 col-md-4">
+			<p> <span class="circle"> 4 </span> Je n'aime pas le changement. </p>
+		</div>
+		<div class="col-12 col-md-2">
+			<input type="number" name="q4" placeholder="" value="{{q4 if q4}}" min="0" max="4" required/>
+		</div>
+		<div class="col-12 col-md-4">
+			<p> <span class="circle"> 9 </span> J'aime beaucoup le cinéma. </p>
+		</div>
+		<div class="col-12 col-md-2">
+			<input type="number" name="q9" placeholder="" value="{{q9 if q9}}" min="0" max="4" required/>
+		</div></div>
+		<div class="row">
+		<div class="col-12 col-md-4">
+			<p> <span class="circle"> 5 </span> La famille est très importante pour moi. </p>
+		</div>
+		<div class="col-12 col-md-2">
+			<input type="number" name="q5" placeholder="" value="{{q5 if q5}}" min="0" max="4" required/>
+		</div>
+		<div class="col-12 col-md-4">
+			<p> <span class="circle"> 10 </span> J'aime faire la fête. </p>
+		</div>
+		<div class="col-12 col-md-2">
+			<input type="number" name="q10" placeholder="" value="{{q10 if q10}}" min="0" max="4" required/>
+		</div></div>
+		<br><br>
 	<div class="row">
-		<div class="col-12">
-	<p> <span class="circle"> 3 </span> Je désire parler à: 
+		<div class="col-6">
+	<p> <span class="circle"> ? </span> Je désire parler à: 
 	<input type="checkbox" name="homme" value="homme"> Homme 
 	<input type="checkbox" name="femme" value="femme"> Femme </p></div></div>
-
-	<p><span class="circle"> 4 </span> Je veux uniquement parler à des personnes de ma région: <input type="checkbox" name="oui" value="oui"> </p>
+	<div class="row">
+		<div class="col-6">
+	<p><span class="circle"> ? </span> Je veux uniquement parler à des personnes de ma région: <input type="checkbox" name="oui" value="oui"> </p></div>
 	<br>
-	<input type="submit" value="Envoyer"/>
+	<div class="col-6">
+	<input type="submit" class="btn-custom value="Envoyer"/></div>
 </form></body>
 

@@ -1,7 +1,15 @@
+:root {
+  --backgroundblue: rgba(211,211,256,0.2);
+  --ourbrown:rgba(115,81,83);
+  --ourlightbrown:rgba(115,81,83,0.7);
+}
+
+
+
 body{
-	font-family: "Apple Chancery, cursive";
+	font-family: Apple Chancery, cursive;
   color:#735153;
-  background-color:  rgba(211,211,256,0.2);
+  background-color: var(--backgroundblue);
 }
 
 h1{
@@ -11,11 +19,19 @@ h1{
 h2{
   text-align:center;
   font-size:100%;
-  color:#735153;
+  color:var(--ourbrown);
   font-weight:bold;
 
 }
 
+h3{
+  font-size:200%;
+  text-align:center;
+}
+
+p{
+  font-size:120%;
+}
 .content{
   max-width: 900px;
   margin: 50px auto;
@@ -29,12 +45,26 @@ h2{
 -moz-border-radius:7px;
 -webkit-border-radius:7px;
 border-radius:7px;
-  background-color:rgba(115,81,83,0.7);
+  background-color:var(--ourlightbrown);
   color:white;
 align-items:center;  
 text-align: center;
   margin: 10px;
 }
+
+.bloc2{
+  border: solid 1px var(--ourbrown);
+  height:100%;
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border-radius:7px;
+  color:rgba(115,81,83,0.9);
+align-items:center;  
+text-align: center;
+  margin: 10px;
+}
+
+
 
 .bottom{
   height: 100px;
@@ -42,7 +72,7 @@ text-align: center;
 
 
 .navbar{
-  background-color:#735153;
+  background-color:var(--ourbrown);
 }
 
 
@@ -50,3 +80,66 @@ text-align: center;
 float:left;
 }
 
+span.circle{
+   background: rgba(115,81,83,0.7); 
+    justify-content: center; 
+    align-items: center; 
+    border-radius: 100%; 
+    text-align: center; 
+    margin: 5px 20px; 
+    font-size: 15px; 
+    padding: 15px; 
+    display: inline-flex; 
+    height: 30px; 
+    width: 30px; 
+    color: white;
+    border: solid var(--ourbrown);
+}
+
+.btn-custom {
+    font-size:100%;
+    border-color:var(--ourbrown);
+    background-color:rgba(115,81,83,0.5);
+    border-style: solid;
+    color:white;
+
+}
+
+.bloc3{
+  border: solid 3px var(--ourbrown);
+  height:100%;
+  color:var(--ourbrown);
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border-radius:7px;
+align-items:center;  
+text-align: center;
+  margin: 10px;
+}
+
+
+
+img.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height:25%;
+ }
+
+
+.navbar-text{
+  font-size:100%;
+}
+
+.bloc4{
+  border: 3px solid;
+  height:100%;
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border-radius:7px;
+  background-color:rgba(115,81,83,0.1);
+  color:(115,81,83);
+align-items:center;  
+text-align: center;
+  margin: 10px;
+}
