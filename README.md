@@ -3,7 +3,8 @@
 To use our website:
 
 - Clone the project
-- Install sqlite3, Flask, flask_sqlalchemy, flask_wtf, wtforms, flask_socketio
+- Install sqlite3, Flask, flask_sqlalchemy, flask_wtf, wtforms, eventlet
+- Install flask_socketio after checking version compatibility https://flask-socketio.readthedocs.io/en/latest/#version-compatibility
 - Open the project with a Python IDE 
 - Run routes.py 
 - Open http://127.0.0.1:5000/ on a web navigator 
