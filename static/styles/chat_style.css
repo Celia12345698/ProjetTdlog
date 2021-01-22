@@ -1,0 +1,166 @@
+:root {
+  --ourpink: rgba(232,143,124,0.6);
+  --ourdarkpink:rgba(232,143,124);
+ --ourbrown2:rgba(115,81,83);
+ --ourlightbrown2:rgba(115,81,83,0.2);
+ --ourgrey:rgba(226,226,226);
+}
+
+
+.wrapper {
+    display: flex;
+}
+
+#main-section {
+    overflow: hidden; 
+    width: 100%;
+}
+
+#sidebar {
+    margin-top: 7em;
+    float: left; 
+    min-height: 85vh;
+    padding-left: 1em;
+    padding-top: 3em;
+    padding-right:1em;
+    border-right: 2px solid var(--ourpink);
+}
+
+#sidebar p {
+    padding-left: 2em;
+    padding-right:2em;
+}
+
+#sidebar p:hover {
+    background-color: var(--ourpink);
+}
+
+#sidebar h4 {padding-left: 0.5em;}
+
+
+#sidebar.view-sidebar {display: none;}
+
+#show-sidebar-button {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s;
+    color: #335177;
+}
+
+@media (max-width: 567px) {
+    #sidebar {
+        display: none;
+    }
+
+    #sidebar.view-sidebar {
+        display: block;
+    }
+
+    #show-sidebar-button {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+#rightside-pannel {
+    overflow: hidden; 
+}
+
+#display-message-section {
+    margin-top: 7em;
+    min-height: 82vh;
+    max-height: 82vh;
+    overflow-y: auto; 
+}
+
+#input-area {
+    padding-left: 1em;
+    padding-right: 1em;
+    bottom: 0;
+}
+
+input[type=text]:focus{
+    border-color: var(--ourpink);
+    box-shadow: 0px 1px 1px var(--ourpink) inset, 0px 0px 10px var(--ourpink);
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.others-msg {
+    margin-right:50em;
+    margin-left: 1em;
+    padding: 0.5em 0.5em 0.5em 1em;
+    border-radius: 5px;
+    border-color: var(--ourbrown2);
+    border-width: 2px;
+    border-style: solid;
+    background-color: white;
+    color:black;
+    animation-name: fadeIn;
+    animation-duration: 0.75s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+}
+
+.my-msg {
+    margin-left:50em;
+    margin-right:1em;
+    padding: 0.5em 0.5em 0.5em 1em;
+    border-radius: 5px;
+    border-width: 2px;
+    border-style: solid ;
+    border-color: var(--ourbrown2);
+
+    color:black;
+    background-color:white;
+    animation-name: fadeIn;
+    animation-duration: 0.75s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+}
+
+.system-msg {
+    margin-right:7em;
+    margin-left: 1em;
+    padding: 0.5em 0.5em 0.5em 1em;
+    color: grey;
+    font-size:1.1em;
+}
+
+.timestamp {
+    color: #656d78;
+    font-size:0.7em;
+}
+
+.other-username {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: darkblue;
+}
+
+.my-username {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: red;
+}
+
+#msg-input {
+    border-color: #ffc107;
+    border-width: 5px;
+}
+
+#get-username {
+    display: none !important;
+}
+
+.btn-send{
+    background-color:var(--ourpink);
+}
