@@ -44,20 +44,6 @@
     color: #335177;
 }
 
-@media (max-width: 567px) {
-    #sidebar {
-        display: none;
-    }
-
-    #sidebar.view-sidebar {
-        display: block;
-    }
-
-    #show-sidebar-button {
-        visibility: visible;
-        opacity: 1;
-    }
-}
 
 
 .cursor-pointer {
