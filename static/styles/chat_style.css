@@ -1,9 +1,6 @@
 :root {
   --ourpink: rgba(232,143,124,0.6);
-  --ourdarkpink:rgba(232,143,124);
  --ourbrown2:rgba(115,81,83);
- --ourlightbrown2:rgba(115,81,83,0.2);
- --ourgrey:rgba(226,226,226);
 }
 
 
@@ -140,13 +137,13 @@ input[type=text]:focus{
     font-size:0.7em;
 }
 
-.other-username {
+.other-firstname {
     font-weight: bold;
     font-size: 1.1em;
     color: darkblue;
 }
 
-.my-username {
+.my-firstname {
     font-weight: bold;
     font-size: 1.1em;
     color: red;
@@ -157,7 +154,7 @@ input[type=text]:focus{
     border-width: 5px;
 }
 
-#get-username {
+#get-firstname {
     display: none !important;
 }
 
