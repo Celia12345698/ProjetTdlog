@@ -39,9 +39,6 @@ def signup():
                             form.gender.data, form.region.data)
             db.session.add(newuser)
             db.session.commit()
-            print(newuser.lastname)
-            print(session)
-            print(session['lastname'])
             session['email'] = newuser.email
             return redirect(url_for('question'))
 
