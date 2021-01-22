@@ -29,7 +29,6 @@ def signup():
     form = SignupForm()
 
     if 'email' in session:
-        user = users.query.filter_by(email=session['email']).first()
         return redirect(url_for('profile'))
 
     if request.method == 'POST':
@@ -40,6 +39,9 @@ def signup():
                             form.gender.data, form.region.data)
             db.session.add(newuser)
             db.session.commit()
+            print(newuser.lastname)
+            print(session)
+            print(session['lastname'])
             session['email'] = newuser.email
             return redirect(url_for('question'))
 
@@ -263,7 +265,7 @@ def chat():
         if user.all_answered == 0:
             flash("Vous n'avez pas répondu à toutes les questions.")
             return (redirect(url_for('question')))
-        return render_template("chat.html", username=user.firstname, rooms=ROOMS)
+        return render_template("chat.html", firstname=user.firstname, rooms=ROOMS)
 
     else:
         return redirect(url_for('signin'))
@@ -272,28 +274,28 @@ def chat():
 @socketio.on('incoming-msg')
 def on_message(data):
     msg = data["msg"]
-    username = data["username"]
+    firstname = data["firstname"]
     room = data["room"]
     time_stamp = time.strftime('%b-%d %I:%M%p', time.localtime())
-    send({"username": username, "msg": msg, "time_stamp": time_stamp}, room=room)
+    send({"firstname": firstname, "msg": msg, "time_stamp": time_stamp}, room=room)
 
 
 # When a user joins a room
 @socketio.on('join')
 def on_join(data):
-    username = data["username"]
+    firstname = data["firstname"]
     room = data["room"]
     join_room(room)
-    send({"msg": username + " a rejoint la salle " + room + "."}, room=room)
+    send({"msg": firstname + " a rejoint la salle " + room + "."}, room=room)
 
 
 # When a user leaves a room
 @socketio.on('leave')
 def on_leave(data):
-    username = data['username']
+    firstname = data['firstname']
     room = data['room']
     leave_room(room)
-    send({"msg": username + " a quitté la salle."}, room=room)
+    send({"msg": firstname + " a quitté la salle."}, room=room)
 
 
 if __name__ == "__main__":
