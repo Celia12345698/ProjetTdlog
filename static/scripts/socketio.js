@@ -2,14 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
-    const username = document.querySelector('#get-username').innerHTML;
+    const firstname = document.querySelector('#get-firstname').innerHTML;
 
     let room = "Fun"
     joinRoom("Fun");
 
     document.querySelector('#send_message').onclick = () => {
         socket.emit('incoming-msg', {'msg': document.querySelector('#user_message').value,
-            'username': username, 'room': room});
+            'firstname': firstname, 'room': room});
 
         document.querySelector('#user_message').value = '';
     };
@@ -18,32 +18,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (data.msg) {
             const p = document.createElement('p');
-            const span_username = document.createElement('span');
+            const span_firstname = document.createElement('span');
             const span_timestamp = document.createElement('span');
             const br = document.createElement('br')
-            if (data.username == username) {
+            if (data.firstname == firstname) {
                     p.setAttribute("class", "my-msg");
 
-                    span_username.setAttribute("class", "my-username");
-                    span_username.innerText = data.username;
+                    span_firstname.setAttribute("class", "my-firstname");
+                    span_firstname.innerText = data.firstname;
 
                     span_timestamp.setAttribute("class", "timestamp");
                     span_timestamp.innerText = data.time_stamp;
 
-                    p.innerHTML += span_username.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_timestamp.outerHTML
+                    p.innerHTML += span_firstname.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_timestamp.outerHTML
 
                     document.querySelector('#display-message-section').append(p);
             }
-            else if (typeof data.username !== 'undefined') {
+            else if (typeof data.firstname !== 'undefined') {
                 p.setAttribute("class", "others-msg");
 
-                span_username.setAttribute("class", "other-username");
-                span_username.innerText = data.username;
+                span_firstname.setAttribute("class", "other-firstname");
+                span_firstname.innerText = data.firstname;
 
                 span_timestamp.setAttribute("class", "timestamp");
                 span_timestamp.innerText = data.time_stamp;
 
-                p.innerHTML += span_username.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_timestamp.outerHTML;
+                p.innerHTML += span_firstname.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_timestamp.outerHTML;
 
                 document.querySelector('#display-message-section').append(p);
             }
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function leaveRoom(room) {
-        socket.emit('leave', {'username': username, 'room': room});
+        socket.emit('leave', {'firstname': firstname, 'room': room});
 
         document.querySelectorAll('.select-room').forEach(p => {
             p.style.color = "black";
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function joinRoom(room) {
 
-        socket.emit('join', {'username': username, 'room': room});
+        socket.emit('join', {'firstname': firstname, 'room': room});
 
         document.querySelector('#' + CSS.escape(room)).style.color = "rgba(232,143,124)";
 
